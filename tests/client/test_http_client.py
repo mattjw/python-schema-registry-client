@@ -1,9 +1,17 @@
+import pickle
+
 import pytest
 import requests
 
 from schema_registry.client import SchemaRegistryClient, schema
 
 from tests import data_gen
+
+
+def test_pickelable():
+    client = SchemaRegistryClient(url="https://127.0.0.1:65534")
+    unpickled_client = pickle.loads(pickle.dumps(client))
+    assert client == unpickled_client
 
 
 def test_context(client):
